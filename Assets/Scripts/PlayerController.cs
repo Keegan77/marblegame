@@ -13,12 +13,15 @@ public class PlayerController : MonoBehaviour
         VICTORY,
         STATES
     }
-
+    private const float gravity = -9.81f;
+    CameraController cameraScript;
     [HideInInspector]
     public State currentState;
 
     [HideInInspector]
     public Rigidbody rigidBody;
+
+    ConstantForce constantForce;
 
     [HideInInspector]
     public Vector3 floorNormal;
@@ -38,7 +41,11 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cameraScript = FindObjectOfType<CameraController>();
+
         rigidBody = GetComponent<Rigidbody>();  // Get rigidbody component
+
+        constantForce = GetComponent<ConstantForce>();
 
         currentState = State.WAIT;            // Set current state to WAIT
     }
@@ -130,6 +137,32 @@ public class PlayerController : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-
+        switch (other.tag)
+        {
+            case "Right":
+                constantForce.force = new Vector3(-gravity, -gravity, 0);
+                cameraScript.currentGrav = CameraController.gravityDirection.Right;
+                break;
+            case "Left":
+                constantForce.force = new Vector3(gravity, -gravity, 0);
+                cameraScript.currentGrav = CameraController.gravityDirection.Left;
+                break;
+            case "Up":
+                constantForce.force = new Vector3(0, -gravity, 0);
+                cameraScript.currentGrav = CameraController.gravityDirection.Up;
+                break;
+            case "Down":
+                constantForce.force = Vector3.zero;
+                cameraScript.currentGrav = CameraController.gravityDirection.Down;
+                break;
+            case "Forward":
+                constantForce.force = new Vector3(0, -gravity, -gravity);
+                cameraScript.currentGrav = CameraController.gravityDirection.Forward;
+                break;
+            case "Back":
+                constantForce.force = new Vector3(0, -gravity, gravity);
+                cameraScript.currentGrav = CameraController.gravityDirection.Back;
+                break;
+        }
     }
 }
