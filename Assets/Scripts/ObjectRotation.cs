@@ -14,20 +14,16 @@ public class ObjectRotation : MonoBehaviour
         Rotate();
         
     }
-    private void Update()
-    {
-
-    }
     void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
     private void Rotate()
     {
-        float mouseX = Input.GetAxisRaw("Horizontal") * sensitivity;
-        float mouseY = Input.GetAxisRaw("Vertical") * sensitivity;
+        float mouseX = Input.GetAxis("Horizontal") * sensitivity;
+        float mouseY = Input.GetAxis("Vertical") * sensitivity;
         Debug.Log(mouseX);
-        eulerAngleVelocity = new Vector3(mouseY, mouseX, 0);
+        eulerAngleVelocity = new Vector3(mouseX, mouseY, 0);
         Quaternion deltaRotation = Quaternion.Euler(eulerAngleVelocity * Time.fixedDeltaTime);
         rb.MoveRotation(rb.rotation * deltaRotation);
     }
