@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
         Forward,
         Back
     }
-    public gravityDirection currentGrav; 
+    public gravityDirection currentGrav;
     private Transform mCamera;
 
     private PlayerController player;
@@ -31,6 +31,8 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float tiltSpeed;
 
+    private float restingZRotation;
+
     [SerializeField]
     private float offset;
 
@@ -40,6 +42,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(transform.forward);
         currentGrav = gravityDirection.Down;
         mCamera = transform.GetChild(0);                // Get Camera from child
         player = FindObjectOfType<PlayerController>();  // Find player
@@ -55,16 +58,22 @@ public class CameraController : MonoBehaviour
         {
             case gravityDirection.Down:
                 player.Move(verticalTilt, horizontalTilt, transform.right);
+                restingZRotation = 0;
                 break;
 
             case gravityDirection.Right:
                 player.Move(verticalTilt, horizontalTilt, transform.up);
+                restingZRotation = 90;
                 break;
 
             case gravityDirection.Left:
+                player.Move(verticalTilt, -horizontalTilt, transform.up);
+                restingZRotation = -90;
                 break;
 
             case gravityDirection.Up:
+                player.Move(verticalTilt, -horizontalTilt, transform.right);
+                restingZRotation = 180;
                 break;
         }
 
@@ -138,14 +147,29 @@ public class CameraController : MonoBehaviour
 
         // Using floor normal adjust the rotation of the camera's x axis at rest.
         float angleBetweenFloorNormal = useFloorNormal ? Vector3.SignedAngle(Vector3.up, player.floorNormal, transform.right) : 0.0f;
-
-        Quaternion targetXRotation = Quaternion.Euler(scaledVerticalTilt + angleBetweenFloorNormal, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        Quaternion targetXRotation = Quaternion.identity;
+        switch (currentGrav)
+        {
+            case gravityDirection.Down:
+                targetXRotation = Quaternion.Euler(scaledVerticalTilt + angleBetweenFloorNormal, 0, 0);
+                break;
+            case gravityDirection.Right:
+                targetXRotation = Quaternion.Euler(0, scaledVerticalTilt + angleBetweenFloorNormal, 0);
+                break;
+            case gravityDirection.Left:
+                targetXRotation = Quaternion.Euler(0, -(scaledVerticalTilt + angleBetweenFloorNormal), 0);
+                break;
+            case gravityDirection.Up:
+                targetXRotation = Quaternion.Euler(-(scaledVerticalTilt + angleBetweenFloorNormal), 0, 0);
+                break;
+        }
+        
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetXRotation, tiltSpeed * Time.deltaTime);
 
         // Rotate camera along the z axis when tilting the joystick left or right to give a left and right tilt effect.
         // The further right the joystick is the higher the angle for target rotation will be and vice versa.
-        float scaledHorizontalTilt = Input.GetAxis("Horizontal") * maxHorizontalAngle;
+        float scaledHorizontalTilt = restingZRotation + (horizontalTilt * maxHorizontalAngle);
 
         Quaternion targetZRotation = Quaternion.Euler(mCamera.rotation.eulerAngles.x, mCamera.rotation.eulerAngles.y, scaledHorizontalTilt);
 

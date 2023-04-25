@@ -49,7 +49,10 @@ public class PlayerController : MonoBehaviour
 
         currentState = State.WAIT;            // Set current state to WAIT
     }
-
+    private void Update()
+    {
+        Debug.Log(currentState);
+    }
     void FixedUpdate()
     {
         switch (currentState)
@@ -69,8 +72,8 @@ public class PlayerController : MonoBehaviour
     public void Move(float verticalTilt, float horizontalTilt, Vector3 right)
     {
         // Only apply movement when the player is grounded
-        if (OnGround())
-        {
+/*        if (OnGround())
+        {*/
             CalculateFloorNormal();
 
             // No input from player
@@ -84,7 +87,7 @@ public class PlayerController : MonoBehaviour
                 Vector3 forward = Vector3.Cross(right, floorNormal);
 
                 // Apply moveForce scaled by verticalTilt in the forward direction (Half the move force when moving backwards)
-                Vector3 forwardForce = (verticalTilt > 0.0f ? 1.0f : 0.5f) * moveForce * verticalTilt * forward;
+                Vector3 forwardForce = (verticalTilt > 0.0f ? 1.0f : 0.5f) * moveForce * verticalTilt * Vector3.forward;
                 // Apply moveForce scaled by horizontalTilt in the right direction
                 Vector3 rightForce = moveForce * horizontalTilt * right;
 
@@ -92,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
                 rigidBody.AddForce(forceVector);
             }
-        }
+        /*}*/
     }
 
     /// <summary>
@@ -148,7 +151,7 @@ public class PlayerController : MonoBehaviour
                 cameraScript.currentGrav = CameraController.gravityDirection.Left;
                 break;
             case "Up":
-                constantForce.force = new Vector3(0, -gravity, 0);
+                constantForce.force = new Vector3(0, -gravity * 2, 0);
                 cameraScript.currentGrav = CameraController.gravityDirection.Up;
                 break;
             case "Down":
