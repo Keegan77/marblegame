@@ -732,8 +732,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 191310459}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.253, y: -0.4275, z: -0.3813}
-  m_LocalScale: {x: 22.606028, y: 0.3691198, z: 3.5743449}
+  m_LocalPosition: {x: -495.331, y: -0.4275, z: -26.7623}
+  m_LocalScale: {x: 992.59717, y: 0.3691198, z: 112.2955}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1331014563}
@@ -3881,6 +3881,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 908467264}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &919510026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 919510027}
+  m_Layer: 0
+  m_Name: GyroTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &919510027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919510026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.0353062, y: -2.1510992, z: 10.769785}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &929003159
 GameObject:
   m_ObjectHideFlags: 0
@@ -7203,6 +7234,7 @@ MonoBehaviour:
   tiltSpeed: 75
   offset: 4
   useFloorNormal: 0
+  gyroInputTest: {fileID: 0}
 --- !u!4 &1805415919
 Transform:
   m_ObjectHideFlags: 0
