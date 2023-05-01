@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
         NORMAL,
         DEAD,
         VICTORY,
-        STATES
     }
     private const float gravity = -9.81f;
     CameraController cameraScript;
@@ -38,9 +37,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float victoryForce;
 
+
     // Start is called before the first frame update
     void Start()
     {
+
+
         cameraScript = FindObjectOfType<CameraController>();
 
         rigidBody = GetComponent<Rigidbody>();  // Get rigidbody component
@@ -51,7 +53,8 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(currentState);
+        //gyroInput = Input.gyro.attitude;
+        
     }
     void FixedUpdate()
     {

@@ -39,9 +39,17 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private bool useFloorNormal;
 
+    //public Transform gyroInputTest;
+    Quaternion gyroInput;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (SystemInfo.supportsGyroscope)
+        {
+            Input.gyro.enabled = true;
+        }
+
         Debug.Log(transform.forward);
         currentGrav = gravityDirection.Down;
         mCamera = transform.GetChild(0);                // Get Camera from child
@@ -52,8 +60,24 @@ public class CameraController : MonoBehaviour
 
     void FixedUpdate()
     {
-        verticalTilt = Input.GetAxis("Vertical");
-        horizontalTilt = Input.GetAxis("Horizontal");
+        gyroInput = Input.gyro.attitude;
+        //Quaternion gyroQuat;
+        //gyroQuat = gyroInputTest.rotation;
+        Debug.Log(verticalTilt);
+        //
+
+        verticalTilt = (-gyroInput.x * 3 + 2);
+        horizontalTilt = (gyroInput.y * 3);
+        
+        // ^Gyro for portrait mode, works fine 
+
+        //
+
+        //verticalTilt = ((gyroInput.y * 3) + 1f);/*Input.GetAxis("Vertical");*/
+        //horizontalTilt = (gyroInput.x * 3) + 1.5f;/* Input.GetAxis("Horizontal");*/
+        
+        // ^Gyro for landscape mode, doesn't work
+
         switch (currentGrav)
         {
             case gravityDirection.Down:
@@ -85,6 +109,9 @@ public class CameraController : MonoBehaviour
         {
             CameraTilt();
         }
+
+        
+
     }
 
     // Update is called once per frame
