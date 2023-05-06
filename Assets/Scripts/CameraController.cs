@@ -66,11 +66,13 @@ public class CameraController : MonoBehaviour
         Debug.Log(verticalTilt);
         //
 
-        verticalTilt = (-gyroInput.x * 3 + 2);
-        horizontalTilt = (gyroInput.y * 3);
-        
-        // ^Gyro for portrait mode, works fine 
+        //verticalTilt = (-gyroInput.x * 3 + 2);
+       // horizontalTilt = (gyroInput.y * 3);
 
+        // ^Gyro for portrait mode, works fine 
+        verticalTilt = Input.GetAxis("Vertical");
+        horizontalTilt = Input.GetAxis("Horizontal");
+        //^debug button controls
         //
 
         //verticalTilt = ((gyroInput.y * 3) + 1f);/*Input.GetAxis("Vertical");*/
