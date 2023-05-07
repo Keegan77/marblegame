@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class CameraController : MonoBehaviour
 {
     public enum gravityDirection
@@ -17,6 +18,11 @@ public class CameraController : MonoBehaviour
     private Transform mCamera;
 
     private PlayerController player;
+
+    [SerializeField]
+    private float spiralTimer;
+    [SerializeField]
+    private float spiralSpeed;
 
 
     private float horizontalTilt;
@@ -38,6 +44,9 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     private bool useFloorNormal;
+
+    [SerializeField]
+    private bool useGyro;
 
     //public Transform gyroInputTest;
     Quaternion gyroInput;
@@ -61,47 +70,41 @@ public class CameraController : MonoBehaviour
     void FixedUpdate()
     {
         gyroInput = Input.gyro.attitude;
-        //Quaternion gyroQuat;
-        //gyroQuat = gyroInputTest.rotation;
         Debug.Log(verticalTilt);
-        //
 
-        //verticalTilt = (-gyroInput.x * 3 + 2);
-       // horizontalTilt = (gyroInput.y * 3);
-
-        // ^Gyro for portrait mode, works fine 
-        verticalTilt = Input.GetAxis("Vertical");
-        horizontalTilt = Input.GetAxis("Horizontal");
-        //^debug button controls
-        //
+        verticalTilt = useGyro ? -gyroInput.x * 3 + 2 : Input.GetAxis("Vertical"); //use button controls unless usegyro is set to true
+        horizontalTilt = useGyro ? gyroInput.y * 3 : Input.GetAxis("Horizontal");
 
         //verticalTilt = ((gyroInput.y * 3) + 1f);/*Input.GetAxis("Vertical");*/
         //horizontalTilt = (gyroInput.x * 3) + 1.5f;/* Input.GetAxis("Horizontal");*/
-        
+
         // ^Gyro for landscape mode, doesn't work
-
-        switch (currentGrav)
+        if (player.currentState == PlayerController.State.NORMAL)
         {
-            case gravityDirection.Down:
-                player.Move(verticalTilt, horizontalTilt, transform.right);
-                restingZRotation = 0;
-                break;
+            switch (currentGrav)
+            {
+                case gravityDirection.Down:
+                    player.Move(verticalTilt, horizontalTilt, transform.right);
+                    restingZRotation = 0;
+                    break;
 
-            case gravityDirection.Right:
-                player.Move(verticalTilt, horizontalTilt, transform.up);
-                restingZRotation = 90;
-                break;
+                case gravityDirection.Right:
+                    player.Move(verticalTilt, horizontalTilt, transform.up);
+                    restingZRotation = 90;
+                    break;
 
-            case gravityDirection.Left:
-                player.Move(verticalTilt, -horizontalTilt, transform.up);
-                restingZRotation = -90;
-                break;
+                case gravityDirection.Left:
+                    player.Move(verticalTilt, -horizontalTilt, transform.up);
+                    restingZRotation = -90;
+                    break;
 
-            case gravityDirection.Up:
-                player.Move(verticalTilt, -horizontalTilt, transform.right);
-                restingZRotation = 180;
-                break;
+                case gravityDirection.Up:
+                    player.Move(verticalTilt, -horizontalTilt, transform.right);
+                    restingZRotation = 180;
+                    break;
+            }
         }
+
 
     }
 
@@ -111,9 +114,6 @@ public class CameraController : MonoBehaviour
         {
             CameraTilt();
         }
-
-        
-
     }
 
     // Update is called once per frame
@@ -122,7 +122,7 @@ public class CameraController : MonoBehaviour
         switch (player.currentState)
         {
             case PlayerController.State.WAIT:
-                StartStage();
+                SpiralProcedure();
                 break;
             case PlayerController.State.NORMAL:
                 // Follow the player
@@ -135,15 +135,11 @@ public class CameraController : MonoBehaviour
         }
     }
 
-   /* void SpiralProcedure()
+    void SpiralProcedure()
     {
         // Decrement timer
         if (spiralTimer > 0.0f)
-            // Speed up timer if the player is holding down the "Jump" button
-            if (Input.GetButton("Jump"))
-                spiralTimer -= spiralSpeed * Time.deltaTime * spiralSpeedMultiplier;
-            else
-                spiralTimer -= spiralSpeed * Time.deltaTime;
+            spiralTimer -= spiralSpeed * Time.deltaTime;
         // Timer reaches 0
         else
         {
@@ -161,7 +157,7 @@ public class CameraController : MonoBehaviour
         transform.LookAt(player.transform.position);                                                                // Face the player
         transform.eulerAngles = new Vector3(initialXRotation, transform.eulerAngles.y, transform.eulerAngles.z);    // Adjust X angle
         transform.position = transform.position - (transform.forward * offset) + Vector3.forward;                   // Move back by a distance of offset + move it forward a distance of forward (1.0f)
-    }*/
+    }
 
     void StartStage()
     {
@@ -170,8 +166,8 @@ public class CameraController : MonoBehaviour
 
     void CameraTilt()
     {
-        // Rotate camera container along the x axis when tilting the joystick up or down to give a forward and back tilt effect.
-        // The further up the joystick is the higher the angle for target rotation will be and vice versa.
+        // Rotate camera container along the x axis when tilting the gyro up or down to give a forward and back tilt effect.
+        // The further up the gyro devce is the higher the angle for target rotation will be and vice versa.
         float scaledVerticalTilt = initialXRotation - (verticalTilt * maxVerticalAngle);
 
         // Using floor normal adjust the rotation of the camera's x axis at rest.
@@ -192,7 +188,7 @@ public class CameraController : MonoBehaviour
                 targetXRotation = Quaternion.Euler(-(scaledVerticalTilt + angleBetweenFloorNormal), 0, 0);
                 break;
         }
-        
+
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetXRotation, tiltSpeed * Time.deltaTime);
 
