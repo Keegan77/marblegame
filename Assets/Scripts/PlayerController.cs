@@ -1,4 +1,4 @@
-
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -169,6 +169,24 @@ public class PlayerController : MonoBehaviour
                 constantForce.force = new Vector3(0, -gravity, gravity);
                 cameraScript.currentGrav = CameraController.gravityDirection.Back;
                 break;
+            case "KillPlane":
+                currentState = State.DEAD;
+                StartCoroutine(DeathWait());
+                break;
+            case "Win":
+                currentState = State.VICTORY;
+                StartCoroutine(Victory());
+                break;
         }
+    }
+    private IEnumerator DeathWait()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    private IEnumerator Victory()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
