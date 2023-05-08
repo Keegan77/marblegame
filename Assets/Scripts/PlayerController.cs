@@ -36,12 +36,13 @@ public class PlayerController : MonoBehaviour
     private float moveForce;
     [SerializeField]
     private float victoryForce;
+    private Collider coll;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        coll = GetComponent<Collider>();
 
         cameraScript = FindObjectOfType<CameraController>();
 
@@ -172,6 +173,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case "Win":
                 currentState = State.VICTORY;
+                coll.isTrigger = true;
                 StartCoroutine(Victory());
                 break;
         }

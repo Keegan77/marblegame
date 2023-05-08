@@ -104,8 +104,6 @@ public class CameraController : MonoBehaviour
                     break;
             }
         }
-
-
     }
 
     void Update()
