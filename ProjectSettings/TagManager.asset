@@ -12,6 +12,7 @@ TagManager:
   - Win
   - Forward
   - Back
+  - Final
   layers:
   - Default
   - TransparentFX
