@@ -132,10 +132,10 @@ public class PlayerController : MonoBehaviour
                 rigidBody.AddForce(victoryForce++ * Vector3.right);
                 break;
             case CameraController.gravityDirection.Up:
-                rigidBody.AddForce(victoryForce++ * Vector3.up);
+                rigidBody.AddForce(victoryForce++ * Vector3.down);
                 break;
             case CameraController.gravityDirection.Down:
-                rigidBody.AddForce(victoryForce++ * Vector3.down);
+                rigidBody.AddForce(victoryForce++ * Vector3.up);
                 break;
 
         }
