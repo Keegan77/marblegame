@@ -72,7 +72,7 @@ public class CameraController : MonoBehaviour
         gyroInput = Input.gyro.attitude;
         Debug.Log(verticalTilt);
 
-        verticalTilt = useGyro ? -gyroInput.x * 3 + 2 : Input.GetAxis("Vertical"); //use button controls unless usegyro is set to true
+        verticalTilt = useGyro ? -gyroInput.x * 3 + 1 : Input.GetAxis("Vertical"); //use button controls unless usegyro is set to true
         horizontalTilt = useGyro ? gyroInput.y * 3 : Input.GetAxis("Horizontal");
 
         //verticalTilt = ((gyroInput.y * 3) + 1f);/*Input.GetAxis("Vertical");*/
