@@ -150,7 +150,7 @@ public class CameraController : MonoBehaviour
         float x = Mathf.Sin(spiralTimer) * Mathf.Pow(1.0f + spiralTimer, 2.0f);
         float z = -Mathf.Cos(spiralTimer) * Mathf.Pow(1.0f + spiralTimer, 2.0f);
 
-        transform.position = new Vector3(x, spiralTimer + spiralTimer, z) + player.transform.position;
+        transform.position = new Vector3(x, spiralTimer, z) + player.transform.position;
 
         transform.LookAt(player.transform.position);                                                                // Face the player
         transform.eulerAngles = new Vector3(initialXRotation, transform.eulerAngles.y, transform.eulerAngles.z);    // Adjust X angle
