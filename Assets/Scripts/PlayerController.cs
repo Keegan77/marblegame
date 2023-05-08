@@ -168,8 +168,11 @@ public class PlayerController : MonoBehaviour
                 cameraScript.currentGrav = CameraController.gravityDirection.Back;
                 break;
             case "KillPlane":
-                currentState = State.DEAD;
-                StartCoroutine(DeathWait());
+                if (currentState != State.VICTORY)
+                {
+                    currentState = State.DEAD;
+                    StartCoroutine(DeathWait());
+                }
                 break;
             case "Win":
                 currentState = State.VICTORY;
