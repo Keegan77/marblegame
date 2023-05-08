@@ -123,7 +123,23 @@ public class PlayerController : MonoBehaviour
 
 
         // Increment force in the up direction
-        rigidBody.AddForce(victoryForce++ * Vector3.up);
+        switch(cameraScript.currentGrav)
+        {
+            case CameraController.gravityDirection.Left:
+                rigidBody.AddForce(victoryForce++ * Vector3.left);
+                break;
+            case CameraController.gravityDirection.Right:
+                rigidBody.AddForce(victoryForce++ * Vector3.right);
+                break;
+            case CameraController.gravityDirection.Up:
+                rigidBody.AddForce(victoryForce++ * Vector3.up);
+                break;
+            case CameraController.gravityDirection.Down:
+                rigidBody.AddForce(victoryForce++ * Vector3.down);
+                break;
+
+        }
+        
     }
 
     /// <summary>
