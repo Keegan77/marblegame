@@ -36,12 +36,13 @@ public class PlayerController : MonoBehaviour
     private float moveForce;
     [SerializeField]
     private float victoryForce;
+    private Collider coll;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        coll = GetComponent<Collider>();
 
         cameraScript = FindObjectOfType<CameraController>();
 
@@ -86,9 +87,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                // Get a direction perpendicular to the camera's right vector and the floor's normal (The forward direction)
-                Vector3 forward = Vector3.Cross(right, floorNormal);
-
                 // Apply moveForce scaled by verticalTilt in the forward direction (Half the move force when moving backwards)
                 Vector3 forwardForce = (verticalTilt > 0.0f ? 1.0f : 0.5f) * moveForce * verticalTilt * Vector3.forward;
                 // Apply moveForce scaled by horizontalTilt in the right direction
@@ -170,11 +168,15 @@ public class PlayerController : MonoBehaviour
                 cameraScript.currentGrav = CameraController.gravityDirection.Back;
                 break;
             case "KillPlane":
-                currentState = State.DEAD;
-                StartCoroutine(DeathWait());
+                if (currentState != State.VICTORY)
+                {
+                    currentState = State.DEAD;
+                    StartCoroutine(DeathWait());
+                }
                 break;
             case "Win":
                 currentState = State.VICTORY;
+                coll.isTrigger = true;
                 StartCoroutine(Victory());
                 break;
         }

@@ -72,7 +72,7 @@ public class CameraController : MonoBehaviour
         gyroInput = Input.gyro.attitude;
         Debug.Log(verticalTilt);
 
-        verticalTilt = useGyro ? -gyroInput.x * 3 + 2 : Input.GetAxis("Vertical"); //use button controls unless usegyro is set to true
+        verticalTilt = useGyro ? -gyroInput.x * 3 + 1 : Input.GetAxis("Vertical"); //use button controls unless usegyro is set to true
         horizontalTilt = useGyro ? gyroInput.y * 3 : Input.GetAxis("Horizontal");
 
         //verticalTilt = ((gyroInput.y * 3) + 1f);/*Input.GetAxis("Vertical");*/
@@ -104,8 +104,6 @@ public class CameraController : MonoBehaviour
                     break;
             }
         }
-
-
     }
 
     void Update()
@@ -152,7 +150,7 @@ public class CameraController : MonoBehaviour
         float x = Mathf.Sin(spiralTimer) * Mathf.Pow(1.0f + spiralTimer, 2.0f);
         float z = -Mathf.Cos(spiralTimer) * Mathf.Pow(1.0f + spiralTimer, 2.0f);
 
-        transform.position = new Vector3(x, spiralTimer, z) + player.transform.position;
+        transform.position = new Vector3(x, spiralTimer + spiralTimer, z) + player.transform.position;
 
         transform.LookAt(player.transform.position);                                                                // Face the player
         transform.eulerAngles = new Vector3(initialXRotation, transform.eulerAngles.y, transform.eulerAngles.z);    // Adjust X angle
