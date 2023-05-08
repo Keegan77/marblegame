@@ -10,6 +10,8 @@ TagManager:
   - Down
   - KillPlane
   - Win
+  - Forward
+  - Back
   layers:
   - Default
   - TransparentFX
