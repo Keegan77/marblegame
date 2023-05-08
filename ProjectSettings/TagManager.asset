@@ -12,7 +12,7 @@ TagManager:
   - Win
   - Forward
   - Back
-  - Final
+  - Audio
   layers:
   - Default
   - TransparentFX
