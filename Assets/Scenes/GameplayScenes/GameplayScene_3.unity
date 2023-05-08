@@ -1123,7 +1123,7 @@ PrefabInstance:
     - target: {fileID: 1316057636117476611, guid: 6218b732683fb3b44ae7259e0c11af76,
         type: 3}
       propertyPath: useGyro
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6218b732683fb3b44ae7259e0c11af76, type: 3}

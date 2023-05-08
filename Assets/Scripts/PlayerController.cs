@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator ReturnToMenu()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene(0);
     }
 }
