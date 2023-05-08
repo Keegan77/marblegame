@@ -126,10 +126,10 @@ public class PlayerController : MonoBehaviour
         switch(cameraScript.currentGrav)
         {
             case CameraController.gravityDirection.Left:
-                rigidBody.AddForce(victoryForce++ * Vector3.left);
+                rigidBody.AddForce(victoryForce++ * Vector3.right);
                 break;
             case CameraController.gravityDirection.Right:
-                rigidBody.AddForce(victoryForce++ * Vector3.right);
+                rigidBody.AddForce(victoryForce++ * Vector3.left);
                 break;
             case CameraController.gravityDirection.Up:
                 rigidBody.AddForce(victoryForce++ * Vector3.down);
@@ -195,16 +195,26 @@ public class PlayerController : MonoBehaviour
                 coll.isTrigger = true;
                 StartCoroutine(Victory());
                 break;
+            case "Final":
+                currentState = State.VICTORY;
+                coll.isTrigger = true;
+                StartCoroutine(ReturnToMenu());
+                break;
         }
     }
     private IEnumerator DeathWait()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     private IEnumerator Victory()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    private IEnumerator ReturnToMenu()
+    {
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(0);
     }
 }
