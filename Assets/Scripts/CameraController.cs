@@ -130,6 +130,9 @@ public class CameraController : MonoBehaviour
                 // Only look as the player falls
                 transform.LookAt(player.transform.position);
                 break;
+            case PlayerController.State.VICTORY:
+                transform.LookAt(player.transform.position);
+                break;
         }
     }
 
