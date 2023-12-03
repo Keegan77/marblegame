@@ -75,8 +75,6 @@ public class CameraController : MonoBehaviour
         verticalTilt = useGyro ? -gyroInput.x * 3 + 1 : Input.GetAxis("Vertical"); //use button controls unless usegyro is set to true
         horizontalTilt = useGyro ? gyroInput.y * 3 : Input.GetAxis("Horizontal");
 
-        //verticalTilt = ((gyroInput.y * 3) + 1f);/*Input.GetAxis("Vertical");*/
-        //horizontalTilt = (gyroInput.x * 3) + 1.5f;/* Input.GetAxis("Horizontal");*/
 
         // ^Gyro for landscape mode, doesn't work
         if (player.currentState == PlayerController.State.NORMAL)

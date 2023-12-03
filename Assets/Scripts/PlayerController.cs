@@ -46,32 +46,25 @@ public class PlayerController : MonoBehaviour
 
         cameraScript = FindObjectOfType<CameraController>();
 
-        rigidBody = GetComponent<Rigidbody>();  // Get rigidbody component
+        rigidBody = GetComponent<Rigidbody>();
 
         constantForce = GetComponent<ConstantForce>();
 
-        currentState = State.WAIT;            // Set current state to WAIT
-    }
-    private void Update()
-    {
-        //gyroInput = Input.gyro.attitude;
-        
+        currentState = State.WAIT;
     }
     void FixedUpdate()
     {
-        switch (currentState)
+        if (currentState == State.VICTORY)
         {
-            case State.VICTORY:
-                ApplyVictoryForce();
-                break;
+            ApplyVictoryForce();
         }
     }
 
     /// <summary>
     /// Applies force to player object
     /// </summary>
-    /// <param name="verticalTilt">Scales force applied in the forward direction (Ranges between 1 and -1)</param>
-    /// <param name="horizontalTilt">Scales force applied in the horizontal direction (Ranges between 1 and -1)</param>
+    /// <param name="verticalTilt">Scales this force applied in the forward direction (Ranges between 1 and -1)</param>
+    /// <param name="horizontalTilt">Scales this force applied in the horizontal direction (Ranges between 1 and -1)</param>
     /// <param name="right">The horizontal direction</param>
     public void Move(float verticalTilt, float horizontalTilt, Vector3 right)
     {
@@ -87,7 +80,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                // Apply moveForce scaled by verticalTilt in the forward direction (Half the move force when moving backwards)
+                // here we scale moveforce by vertical tilt. this makes our max forward and backward variables 1 and .5, with the ability for the force to be between 1 and 0
                 Vector3 forwardForce = (verticalTilt > 0.0f ? 1.0f : 0.5f) * moveForce * verticalTilt * Vector3.forward;
                 // Apply moveForce scaled by horizontalTilt in the right direction
                 Vector3 rightForce = moveForce * horizontalTilt * right;
@@ -184,16 +177,16 @@ public class PlayerController : MonoBehaviour
                 cameraScript.currentGrav = CameraController.gravityDirection.Back;
                 break;
             case "KillPlane":
-                if (currentState != State.VICTORY)
-                {
-                    currentState = State.DEAD;
-                    StartCoroutine(DeathWait());
-                }
+                
                 break;
             case "Win":
-                currentState = State.VICTORY;
-                coll.isTrigger = true;
-                StartCoroutine(Victory());
+                if (currentState != State.DEAD)
+                {
+                    currentState = State.VICTORY;
+                    coll.isTrigger = true;
+                    StartCoroutine(Victory());
+                }
+                
                 break;
             case "Final":
                 currentState = State.VICTORY;
@@ -202,6 +195,19 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("KillPlane"))
+        {
+            if (currentState != State.VICTORY)
+            {
+                currentState = State.DEAD;
+                StartCoroutine(DeathWait());
+            }
+        }
+    }
+
     private IEnumerator DeathWait()
     {
         yield return new WaitForSeconds(2);
