@@ -25,6 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 952394654925995615}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.70689625, y: 0.017257959, z: 0.017257443, w: 0.7068961}
   m_LocalPosition: {x: -1, y: -0.79, z: -4.36}
   m_LocalScale: {x: 48.90327, y: 48.90327, z: 48.90327}
@@ -34,7 +35,6 @@ Transform:
   - {fileID: 5680473136664407596}
   - {fileID: 188817299744912454}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 180, z: -177.203}
 --- !u!33 &3590388001452550976
 MeshFilter:
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3ff405c747cee6b459ef06555ea4cc35, type: 2}
+  - {fileID: 2100000, guid: ba6f5c31cb6872f41a38f0e1c4549f7a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,13 +111,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5384200168860104129}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.0000004936009, y: -0.7071068, z: 0.7071068, w: 0.0000004936009}
   m_LocalPosition: {x: 0.0001431585, y: -0.00055211294, z: 0.009222283}
   m_LocalScale: {x: 0.03130138, y: 0.03130139, z: 0.03130139}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 467324637389808869}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 2.797, z: 0}
 --- !u!33 &5384200168860104134
 MeshFilter:
@@ -194,13 +194,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6922305816140065592}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0001, y: 0.0025, z: 0.0101}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 467324637389808869}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &1489991439717686371
 Light:
@@ -276,19 +276,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 1
+  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
+  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
   m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 1
 --- !u!1001 &1748098029224435665
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 467324637389808869}
     m_Modifications:
     - target: {fileID: 1935612912341478293, guid: 8f78a155abbb17842a1be51580e481a5,
@@ -397,6 +401,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f78a155abbb17842a1be51580e481a5, type: 3}
 --- !u!4 &188817299744912454 stripped
 Transform:
